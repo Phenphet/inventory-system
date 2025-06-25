@@ -26,6 +26,7 @@ model product {
 model location {
   location_id  Int @id @default(autoincrement())
   location_name String
+  location_province String?
   source_location stockmovement[] @relation("source_location")
   destination_location stockmovement[] @relation("destination_location")
 }
