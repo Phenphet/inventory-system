@@ -6,10 +6,49 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+
+model product {
+  product_id Int @id @default(autoincrement()) 
+  product_name String
+  product_unit String
+  product_reorder_level Int
+  stockmovemnt stockmovement[]
+}
+
+
+model location {
+  location_id  Int @id @default(autoincrement())
+  location_name String
+  source_location stockmovement[] @relation("source_location")
+  destination_location stockmovement[] @relation("destination_location")
+}
+
+model stockmovement {
+  movement_id Int @id @default(autoincrement())
+  product_id Int
+  product product @relation(fields: [product_id], references: [product_id])
+  movement_type String 
+  quantity Int
+  movement_date DateTime
+  reference_number String?
+  remarks String?
+  source_location_id Int
+  source_location location @relation("source_location", fields: [source_location_id], references: [location_id])
+  destination_location_id Int
+  destination_location location @relation("destination_location", fields: [destination_location_id], references: [location_id])
+}
+
+model user {
+  user_id Int @id @default(autoincrement())
+  user_fullname String
+  user_email String @unique
+  user_password String
+  user_status String
 }
