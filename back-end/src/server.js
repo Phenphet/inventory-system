@@ -8,6 +8,12 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 
+const productController = require('./controller/productController')
+const locationController = require('./controller/locationController')
+
+app.use('/api', productController)
+app.use('/api', locationController)
+
 app.get('/', (req, res) => {
     res.json({message: 'Helloworld'})
 })
