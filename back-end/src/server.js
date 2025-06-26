@@ -10,9 +10,11 @@ app.use(cors())
 
 const productController = require('./controller/productController')
 const locationController = require('./controller/locationController')
+const momentStockController = require('./controller/momentStockController')
 
 app.use('/api', productController)
 app.use('/api', locationController)
+app.use('/api', momentStockController)
 
 app.get('/', (req, res) => {
     res.json({message: 'Helloworld'})

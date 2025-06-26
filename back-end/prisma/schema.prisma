@@ -40,10 +40,10 @@ model stockmovement {
   movement_date DateTime
   reference_number String?
   remarks String?
-  source_location_id Int
-  source_location location @relation("source_location", fields: [source_location_id], references: [location_id])
-  destination_location_id Int
-  destination_location location @relation("destination_location", fields: [destination_location_id], references: [location_id])
+  source_location_id Int?
+  source_location location? @relation("source_location", fields: [source_location_id], references: [location_id])
+  destination_location_id Int?
+  destination_location location? @relation("destination_location", fields: [destination_location_id], references: [location_id])
 }
 
 model user {
