@@ -1,16 +1,22 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 
+import Navbar from '@/components/Navbar.vue';
+import Sidebar from './components/Sidebar.vue';
+
 </script>
 
 <template>
-  <header>
+  <Navbar />
 
-  </header>
+  <Sidebar />
 
-  <RouterView />
+  <div class="content-wrapper">
+    <RouterView />
+  </div>
+
+
+  <aside class="control-sidebar control-sidebar-dark"></aside>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
