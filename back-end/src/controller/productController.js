@@ -29,7 +29,7 @@ app.get('/product', async(req, res) => {
             })
         }
     } catch (error) {
-        res.status(500).send({error})
+        res.status(500).send({error: error.message})
     }
     res.json({message: 'product'})
 }) 
@@ -54,7 +54,7 @@ app.post('/product/create', async(req, res) => {
         }
     
     } catch (error) {
-        res.status(500).send({error})
+        res.status(500).send({error: error.message})
     }
 })
 
@@ -89,7 +89,7 @@ app.put('/product/update/:product_id', async(req, res) => {
         }
     
     } catch (error) {
-        res.status(500).send({error})
+        res.status(500).send({error: error.message})
     }
 })
 
@@ -115,7 +115,7 @@ app.delete('/product/delete/:product_id', async(req, res) => {
             })
         }
     } catch (error) {
-        res.status(500).send({error})
+        res.status(500).send({error: error.message})
     }
 })
 

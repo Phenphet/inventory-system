@@ -28,7 +28,7 @@ app.get('/location', async(req, res) => {
         }
 
     } catch (error) {
-        res.status(500).send({error})
+        res.status(500).send({error: error.message})
     }
 })
 
@@ -50,7 +50,7 @@ app.post('/location/create', async(req, res) => {
             })
         }
     } catch (error) {
-        res.status(500).send({error})
+        res.status(500).send({error: error.message})
     }
 }) 
 
@@ -83,7 +83,7 @@ app.put('/location/update/:location_id', async(req, res) => {
             })
         }
     } catch (error) {
-        res.status(500).send({error}) 
+        res.status(500).send({error: error.message})
     }
 })
 
@@ -108,7 +108,7 @@ app.delete('/location/delete/:location_id', async(req, res) => {
             })
         }
     } catch (error) {
-        res.status(500).send({error})
+        res.status(500).send({error: error.message})
     }
 })
 
