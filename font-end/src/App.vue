@@ -15,7 +15,6 @@ import Sidebar from './components/Sidebar.vue';
     <RouterView />
   </div>
 
-
   <aside class="control-sidebar control-sidebar-dark"></aside>
 </template>
 
