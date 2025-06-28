@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import Notfound from '@/views/Notfound.vue'
+import ErrorView from '@/views/ErrorView.vue'
 import ProductView from '@/views/ProductView.vue'
 
 const router = createRouter({
@@ -22,7 +22,7 @@ const router = createRouter({
     {
       path: '/404',
       name: '404notfound',
-      component: Notfound
+      component: ErrorView
     },
     {
       path: '/product',
