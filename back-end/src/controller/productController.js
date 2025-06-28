@@ -31,7 +31,6 @@ app.get('/product', async(req, res) => {
     } catch (error) {
         res.status(500).send({error: error.message})
     }
-    res.json({message: 'product'})
 }) 
 
 app.post('/product/create', async(req, res) => {
