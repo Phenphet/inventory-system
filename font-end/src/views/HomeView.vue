@@ -9,7 +9,5 @@
         <button class="btn btn-primary">Click me</button>
       </div>
     </div>
-
-
   </main>
 </template>
