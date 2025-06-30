@@ -4,7 +4,6 @@
 
   interface TableInterface {
     idTable: string
-    name: string
     showData: any[]
     columns: {data: string, title: string}[]
     idField: string
@@ -43,7 +42,7 @@
           }
         }
       ],
-      "buttons": [, "csv", "excel"]
+      // "buttons": [, "csv", "excel"]
     })
 
     $(`#${props.idTable} tbody`).on('click', '.edit-btn', function (this: HTMLElement) {
