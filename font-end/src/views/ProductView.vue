@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 
 import type { Product } from '@/controller/ProductController'
-import { productQuery } from '@/controller/ProductController'
+import { productQuery, productCreate } from '@/controller/ProductController'
 
 import ModalComponents from '@/components/ModalComponents.vue'
 import TableComponents from '@/components/TableComponents.vue'
@@ -45,6 +45,10 @@ const saveBtnFunc = () => {
     console.log(formProduct.value.product_reorder_level)
     console.log(formProduct.value.product_unit)
     console.log('add-data')
+
+    const productSave = productCreate(formProduct.value)
+    console.log(productSave)
+
   } else {
     console.log('data', formProduct.value.product_id)
     console.log('data', formProduct.value.product_name)
