@@ -11,9 +11,6 @@ app.get('/product', async(req, res) => {
                 product_name: true,
                 product_reorder_level: true,
                 product_unit: true
-            },
-            orderBy: {
-                product_id: "desc"
             }
         })
 

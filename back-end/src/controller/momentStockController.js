@@ -20,10 +20,8 @@ app.get('/movement', async(req, res) => {
                 reference_number: true,
                 remarks: true,
                 movement_date: true
-            },
-            orderBy: {
-                movement_id: 'desc'
             }
+           
         })
 
         if(result.length > 0){
