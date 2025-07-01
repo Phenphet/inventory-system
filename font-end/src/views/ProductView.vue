@@ -41,8 +41,15 @@ const openModalfunc = () => {
 
 const saveBtnFunc = () => {
   if (isStatusModal.value === 'Add') {
+    console.log(formProduct.value.product_name)
+    console.log(formProduct.value.product_reorder_level)
+    console.log(formProduct.value.product_unit)
     console.log('add-data')
   } else {
+    console.log('data', formProduct.value.product_id)
+    console.log('data', formProduct.value.product_name)
+    console.log('data', formProduct.value.product_reorder_level)
+    console.log('data', formProduct.value.product_unit)
     console.log('edit-data')
   }
 }
@@ -98,10 +105,10 @@ const clearFrom = () => {
   <div class="content" v-if="isloadData">
     <div class="container-fluid">
       <div class="d-flex justify-content-center align-items-center" style="height: 500px;">
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden"></span>
-          </div>
-          <p class="mt-3">&nbsp;&nbsp;&nbsp;Loading...</p>
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden"></span>
+        </div>
+        <p class="mt-3">&nbsp;&nbsp;&nbsp;Loading...</p>
       </div>
     </div>
   </div>
@@ -123,25 +130,30 @@ const clearFrom = () => {
       </div>
     </div>
   </div>
-
-  <ModalComponents :showModal="showModal" :closeBtn="closeModalFunc" :saveBtn="saveBtnFunc">
-    <div class="card">
-      <div class="card-body">
-        <div class="form-group">
-          <label>ชื่อสินค้า</label>
-          <input type="text" class="form-control" placeholder="ชื่อสินค้า" v-model="formProduct.product_name">
+  <div class="content">
+    <div class="container-fluid">
+      <ModalComponents :showModal="showModal" :closeBtn="closeModalFunc" :saveBtn="saveBtnFunc">
+        <div class="card">
+          <div class="card-body">
+            <div class="form-group">
+              <label>ชื่อสินค้า</label>
+              <input type="text" class="form-control" placeholder="ชื่อสินค้า" v-model="formProduct.product_name">
+            </div>
+            <div class="form-group">
+              <label>จำนวนคงเหลือ</label>
+              <input type="number" class="form-control" placeholder="จำนวนคงเหลือ"
+                v-model="formProduct.product_reorder_level">
+            </div>
+            <div class="form-group">
+              <label>หน่วยของสินค้า</label>
+              <input type="text" class="form-control" placeholder="หน่วย / ประเภท" v-model="formProduct.product_unit">
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-          <label>จำนวนคงเหลือ</label>
-          <input type="number" class="form-control" placeholder="จำนวนคงเหลือ" v-model="formProduct.product_reorder_level">
-        </div>
-        <div class="form-group">
-          <label>หน่วยของสินค้า</label>
-          <input type="text" class="form-control" placeholder="หน่วย / ประเภท" v-model="formProduct.product_unit">
-        </div>
-      </div>
+      </ModalComponents>
     </div>
-  </ModalComponents>
+  </div>
+
 
   <div :class="showModal ? 'modal-backdrop fade show' : ''" style="transition: 0s ease-in-out ;"></div>
 
