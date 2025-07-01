@@ -78,7 +78,9 @@ const clearFrom = () => {
 </script>
 
 <template>
-  <section class="content-header" :class="showModal ? 'modal-open ' : ''">
+  <div v-if="isloadData" style="height: 100px;"></div>
+
+  <section v-else class="content-header" :class="showModal ? 'modal-open ' : ''">
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
