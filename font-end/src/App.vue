@@ -16,7 +16,7 @@ import Sidebar from './components/Sidebar.vue';
   </div>
 
   <aside class="control-sidebar control-sidebar-dark"></aside>
-  <div id="sidebar-overlay"></div>
+
 </template>
 
 <style scoped></style>
