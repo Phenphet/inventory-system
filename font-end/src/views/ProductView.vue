@@ -3,7 +3,7 @@ import { computed, onMounted, ref } from 'vue'
 import Swal from 'sweetalert2'
 
 import type { Product } from '@/controller/ProductController'
-import { productQuery, productCreate } from '@/controller/ProductController'
+import { productQuery, productCreate, productUpdate, productDelete } from '@/controller/ProductController'
 
 import ModalComponents from '@/components/ModalComponents.vue'
 import TableComponents from '@/components/TableComponents.vue'
@@ -40,19 +40,22 @@ const openModalfunc = () => {
   clearFrom()
 }
 
-const saveBtnFunc = async() => {
+const saveBtnFunc = async () => {
   if (isStatusModal.value === 'Add') {
-    Swal.fire({
-      icon: 'success',
-      title: 'ทำการบันทึกข้อมูลเรียบร้อย',
-      timer: 2000,
-    })
-
     const productSave = productCreate(formProduct.value)
-    if (await productSave){
+
+    if (await productSave) {
       showData.value = await productQuery()
+      showModal.value = !showModal.value
       clearFrom()
-    }else{
+
+      Swal.fire({
+        icon: 'success',
+        title: 'ทำการบันทึกข้อมูลเรียบร้อย',
+        timer: 2000,
+      })
+
+    } else {
       Swal.fire({
         icon: 'error',
         title: 'ไม่สามารบันทึกข้อมูลได้',
@@ -60,34 +63,88 @@ const saveBtnFunc = async() => {
       })
     }
   } else {
-    console.log('data', formProduct.value.product_id)
-    console.log('data', formProduct.value.product_name)
-    console.log('data', formProduct.value.product_reorder_level)
-    console.log('data', formProduct.value.product_unit)
-    console.log('edit-data')
+    const product_update = await productUpdate(formProduct.value)
+
+    if (product_update) {
+      showData.value = await productQuery()
+      showModal.value = !showModal.value
+      clearFrom()
+
+      Swal.fire({
+        icon: 'success',
+        title: 'ทำการแก้ไขข้อมูลเรียบร้อย',
+        timer: 2000,
+      })
+
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'ไม่สามารถแก้ไขข้อมูลได้',
+        timer: 2000,
+      })
+    }
   }
 }
 
 const closeModalFunc = () => { showModal.value = !showModal.value }
 
 const handleEdit = (id: Number) => {
+  Swal.fire({
+    icon: 'question',
+    title: 'คุณต้องการแก้ไขข้อมูลหรือไม่',
+    confirmButtonText: "Yes",
+    cancelButtonText: "No",
+    showCancelButton: true,
+    showCloseButton: true
+  }).then((result) => {
+    if(result.isConfirmed){
+      isStatusModal.value = 'Edit'
 
-  isStatusModal.value = 'Edit'
+      showModal.value = !showModal.value
 
-  showModal.value = !showModal.value
+      const data = showData.value.find((items) => items.product_id === id)
 
-  const data = showData.value.find((items) => items.product_id === id)
+      formProduct.value.product_id = data!.product_id
+      formProduct.value.product_name = data!.product_name
+      formProduct.value.product_reorder_level = data!.product_reorder_level
+      formProduct.value.product_unit = data!.product_unit
 
-  formProduct.value.product_id = data!.product_id
-  formProduct.value.product_name = data!.product_name
-  formProduct.value.product_reorder_level = data!.product_reorder_level
-  formProduct.value.product_unit = data!.product_unit
-
-  console.log(id)
+      console.log(id)
+    }
+  })
+  
 }
 
 const handleDelete = (id: Number) => {
-  console.log(id)
+   Swal.fire({
+    icon: 'question',
+    title: 'คุณต้องการลบข้อมูลหรือไม่',
+    confirmButtonText: "Yes",
+    cancelButtonText: "No",
+    showCancelButton: true,
+    showCloseButton: true
+  }).then(async(result) => {
+    if(result.isConfirmed){
+      const product_delete = await productDelete(id)
+      if(product_delete){
+        Swal.fire({
+          icon: 'success',
+          title: 'ทำการลบข้อมูลเรียบร้อย',
+          timer: 2000,
+        })
+
+        showData.value = await productQuery()
+
+      }else {
+        Swal.fire({
+        icon: 'error',
+        title: 'ไม่สามารถลบข้อมูลได้',
+        timer: 2000,
+      })
+      }
+    }
+  })
+
 }
 
 const clearFrom = () => {
