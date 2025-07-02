@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import Swal from 'sweetalert2'
 
 import type { Product } from '@/controller/ProductController'
 import { productQuery, productCreate } from '@/controller/ProductController'
@@ -39,16 +40,25 @@ const openModalfunc = () => {
   clearFrom()
 }
 
-const saveBtnFunc = () => {
+const saveBtnFunc = async() => {
   if (isStatusModal.value === 'Add') {
-    console.log(formProduct.value.product_name)
-    console.log(formProduct.value.product_reorder_level)
-    console.log(formProduct.value.product_unit)
-    console.log('add-data')
+    Swal.fire({
+      icon: 'success',
+      title: 'ทำการบันทึกข้อมูลเรียบร้อย',
+      timer: 2000,
+    })
 
     const productSave = productCreate(formProduct.value)
-    console.log(productSave)
-
+    if (await productSave){
+      showData.value = await productQuery()
+      clearFrom()
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'ไม่สามารบันทึกข้อมูลได้',
+        timer: 2000,
+      })
+    }
   } else {
     console.log('data', formProduct.value.product_id)
     console.log('data', formProduct.value.product_name)
