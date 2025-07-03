@@ -1,8 +1,8 @@
 {
   
-  "include": [
-    "src/**/*.d.ts",
-  ],
+  // "include": [
+  //   "src/**/*.d.ts",
+  // ],
   "files": [],
   "references": [
     {
