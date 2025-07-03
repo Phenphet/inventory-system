@@ -42,9 +42,9 @@ const openModalfunc = () => {
 
 const saveBtnFunc = async () => {
   if (isStatusModal.value === 'Add') {
-    const productSave = productCreate(formProduct.value)
+    const product_save = productCreate(formProduct.value)
 
-    if (await productSave) {
+    if (await product_save) {
       showData.value = await productQuery()
       showModal.value = !showModal.value
       clearFrom()
