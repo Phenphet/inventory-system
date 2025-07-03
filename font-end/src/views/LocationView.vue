@@ -59,8 +59,6 @@ const saveBtnFunc = async () => {
         timer: 2000,
       })
     }
-
-    console.log('save-data')
   } else {
 
     const location_update = await locationUpdate(fromLocation.value)
@@ -83,8 +81,6 @@ const saveBtnFunc = async () => {
         timer: 2000,
       })
     }
-
-    console.log('edit-data')
   }
 }
 
@@ -115,15 +111,13 @@ const handleDelete = (id: Number) => {
 
   Swal.fire({
     icon: 'question',
-    title: 'คุณต้องการแก้ไขข้อมูลหรือไม่',
+    title: 'คุณต้องการลบข้อมูลหรือไม่',
     confirmButtonText: "Yes",
     cancelButtonText: "No",
     showCancelButton: true,
     showCloseButton: true
   }).then(async (result) => {
     if (result.isConfirmed) {
-      isStatusModal.value = 'Edit'
-      showModal.value = !showModal.value
 
       const location_delete_data = await location_delete(location_id)
 

@@ -19,7 +19,10 @@ export const loactionCreate = async(data : Location) : Promise<Location[]> => {
   const location_name = data.location_name
   const location_province = data.location_province
 
-  const response = await axios.post('')
+  const response = await axios.post(`${api}/location/create`, {
+    location_name: location_name,
+    location_province: location_province
+  })
 
   return response.data.data
 }
@@ -33,7 +36,7 @@ export const locationUpdate = async(data: Location) : Promise<Location[]> => {
     location_name: location_name,
     location_province: location_province
   })
-  console.log(response.data.data)
+
   return response.data.data
 }
 
