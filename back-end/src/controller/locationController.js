@@ -9,6 +9,7 @@ app.get('/location', async(req, res) => {
             select: {
                 location_id: true,
                 location_name: true,
+                location_province: true
             }
         })
         
