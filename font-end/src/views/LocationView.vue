@@ -6,7 +6,7 @@ import ModalComponents from '@/components/ModalComponents.vue'
 import TableComponents from '@/components/TableComponents.vue'
 
 import type { Location } from '@/controller/LocationController'
-import { locationQuery, loactionCreate, locationUpdate, location_delete } from '@/controller/LocationController'
+import { locationQuery, loactionCreate, locationUpdate, locationDelete } from '@/controller/LocationController'
 
 const showData = ref<Location[]>([])
 const showModal = ref<Boolean>(false)
@@ -119,9 +119,9 @@ const handleDelete = (id: Number) => {
   }).then(async (result) => {
     if (result.isConfirmed) {
 
-      const location_delete_data = await location_delete(location_id)
+      const location_delete= await locationDelete(location_id)
 
-      if (location_delete_data) {
+      if (location_delete) {
         Swal.fire({
           icon: 'success',
           title: 'ทำการลบข้อมูลเรียบร้อย',

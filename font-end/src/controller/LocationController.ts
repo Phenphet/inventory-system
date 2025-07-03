@@ -41,7 +41,7 @@ export const locationUpdate = async(data: Location) : Promise<Location[]> => {
 }
 
 
-export const location_delete = async(id: Number) : Promise<Location[]> => {
+export const locationDelete = async(id: Number) : Promise<Location[]> => {
   const location_id = id
 
   const response = await axios.delete(`${api}/location/delete/${location_id}`)
