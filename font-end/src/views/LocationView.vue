@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
+import Swal from 'sweetalert2'
 
 import ModalComponents from '@/components/ModalComponents.vue'
 import TableComponents from '@/components/TableComponents.vue'
 
 import type { Location } from '@/controller/LocationController'
-import { locationQuery } from '@/controller/LocationController'
+import { locationQuery, loactionCreate, locationUpdate, location_delete } from '@/controller/LocationController'
 
 const showData = ref<Location[]>([])
 const showModal = ref<Boolean>(false)
@@ -26,7 +27,6 @@ onMounted(async () => {
 })
 
 
-
 const openModalfunc = () => {
   isStatusModal.value = 'Add'
   showModal.value = !showModal.value
@@ -36,16 +36,122 @@ const closeModalFunc = () => {
   showModal.value = !showModal.value
 }
 
-const saveBtnFunc = () => {
-  if( isStatusModal.value === 'Add') {
+const saveBtnFunc = async () => {
+  if (isStatusModal.value === 'Add') {
+
+    const lcation_save = await loactionCreate(fromLocation.value)
+
+    if (lcation_save) {
+      showData.value = await locationQuery()
+      showModal.value = !showModal.value
+      clearFrom()
+
+      Swal.fire({
+        icon: 'success',
+        title: 'ทำการบันทึกข้อมูลเรียบร้อย',
+        timer: 2000,
+      })
+
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'ไม่สามารบันทึกข้อมูลได้',
+        timer: 2000,
+      })
+    }
+
     console.log('save-data')
-  }else{
+  } else {
+
+    const location_update = await locationUpdate(fromLocation.value)
+
+    if (location_update) {
+      showData.value = await locationQuery()
+      showModal.value = !showModal.value
+      clearFrom()
+
+      Swal.fire({
+        icon: 'success',
+        title: 'ทำการแก้ไขข้อมูลเรียบร้อย',
+        timer: 2000,
+      })
+
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'ไม่สามารถแก้ไขข้อมูลได้',
+        timer: 2000,
+      })
+    }
+
     console.log('edit-data')
   }
- }
+}
 
-const handleEdit = () => {}
-const handleDelete = () => {}
+const handleEdit = (id: Number) => {
+  Swal.fire({
+    icon: 'question',
+    title: 'คุณต้องการแก้ไขข้อมูลหรือไม่',
+    confirmButtonText: "Yes",
+    cancelButtonText: "No",
+    showCancelButton: true,
+    showCloseButton: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      isStatusModal.value = 'Edit'
+      showModal.value = !showModal.value
+
+      const data = showData.value.find((items) => items.location_id === id)
+
+      fromLocation.value.location_id = data!.location_id
+      fromLocation.value.location_name = data!.location_name
+      fromLocation.value.location_province = data!.location_province
+    }
+  })
+}
+const handleDelete = (id: Number) => {
+
+  const location_id = id
+
+  Swal.fire({
+    icon: 'question',
+    title: 'คุณต้องการแก้ไขข้อมูลหรือไม่',
+    confirmButtonText: "Yes",
+    cancelButtonText: "No",
+    showCancelButton: true,
+    showCloseButton: true
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      isStatusModal.value = 'Edit'
+      showModal.value = !showModal.value
+
+      const location_delete_data = await location_delete(location_id)
+
+      if (location_delete_data) {
+        Swal.fire({
+          icon: 'success',
+          title: 'ทำการลบข้อมูลเรียบร้อย',
+          timer: 2000,
+        })
+
+        showData.value = await locationQuery()
+
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'ไม่สามารถลบข้อมูลได้',
+          timer: 2000,
+        })
+      }
+
+    }
+  })
+}
+
+const clearFrom = () => {
+  fromLocation.value.location_name = ''
+  fromLocation.value.location_province = ''
+}
 </script>
 
 <template>
@@ -73,7 +179,7 @@ const handleDelete = () => {}
               <h3 class="card-title">DataTable with default features show location</h3>
             </div>
             <div class="card-body">
-              <TableComponents :idTable="'showDataProduct'" :idField="'product_id'" :showData="showData"
+              <TableComponents :idTable="'showDataProduct'" :idField="'location_id'" :showData="showData"
                 :columns="columns" :handleEdit="handleEdit" :handleDelete="handleDelete"></TableComponents>
             </div>
           </div>
@@ -89,7 +195,7 @@ const handleDelete = () => {}
     </div>
     <div class="form-group">
       <label>ชื่อโรงงาน</label>
-      <input type="text" class="form-control" placeholder="ชื่อโรงงาน"  v-model="fromLocation.location_province">
+      <input type="text" class="form-control" placeholder="ชื่อโรงงาน" v-model="fromLocation.location_province">
     </div>
   </ModalComponents>
 
