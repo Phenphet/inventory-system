@@ -29,7 +29,7 @@ const columns = [
 onMounted(async () => {
   setTimeout(() => {
     isloadData.value = false
-  }, 1000)
+  }, 100)
 
   showData.value = await productQuery()
 })
