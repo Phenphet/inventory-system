@@ -29,7 +29,7 @@ const columns = [
 onMounted(async () => {
   setTimeout(() => {
     isloadData.value = false
-  }, 2000)
+  }, 1000)
 
   showData.value = await productQuery()
 })
@@ -112,7 +112,7 @@ const handleEdit = (id: Number) => {
       console.log(id)
     }
   })
-  
+
 }
 
 const handleDelete = (id: Number) => {
