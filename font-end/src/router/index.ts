@@ -4,7 +4,9 @@ import HomeView from '../views/HomeView.vue'
 import ErrorView from '@/views/ErrorView.vue'
 import ProductView from '@/views/ProductView.vue'
 import LocationView from '@/views/LocationView.vue'
-import StockView from '@/views/StockView.vue'
+import StockViewIN from '@/views/StockViewIN.vue'
+import StockViewTRANFER from '@/views/StockViewTRANFER.vue'
+import StockViewINOUT from '@/views/StockViewOUT.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,9 +40,19 @@ const router = createRouter({
       component: LocationView
     },
     {
-      path: '/stock',
+      path: '/stock-in',
       name: 'stock',
-      component: StockView
+      component: StockViewIN
+    },
+    {
+      path: '/stock-out',
+      name: 'stock',
+      component: StockViewINOUT
+    },
+    {
+      path: '/stock-tranfer',
+      name: 'stock',
+      component: StockViewTRANFER
     }
   ],
 })
